@@ -83,7 +83,7 @@ void afficher_schema(Table* t) {
 	scanf("%s", mot);// Récupération nom de la table
 	if (strcmp(mot, t->nom) == 0) {
 		printf("%s %s\n", &t->nom, &t->nbChamps);
-		for (unsigned int i = 0; i < atoi(&(t->nbChamps)); ++i)
+		for (unsigned int i = 0; i <t->nbChamps; ++i)
 			printf("%s %s\n", t->schema[i].nom, t->schema[i].type);// Affichage champs
 
 	}
@@ -111,12 +111,12 @@ void afficher_enregistrement(Table* t) {
 	scanf("%s", mot);
 	if (strcmp(mot, t->nom) == 0) {
 		for (int i = 0; i < t->nbEnregistrement; ++i) {
-			printf("%d", i + 1);
+			printf("%d ", i + 1);
 			for (int r = 0; r < t->nbChamps; ++r) {
-				printf("%s %s", t->schema[r].type, t->enregistre[i].data[r].motdat);
+				printf("%s %s ", t->schema[r].type, t->enregistre[i].data[r].motdat);
 
 			}
-
+			printf("\n");
 		}
 	}
 	else {
