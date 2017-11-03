@@ -1,3 +1,7 @@
+/*Nom de fichier: Interpréteur de commandes sur une table de données
+*Nom et groupe des auteurs: Rudy Fernando Groupe 105 et Romain Madi Groupe 105
+*Date de création:02/10/2017
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -32,14 +36,53 @@ typedef struct {
 
 
 
+/*
+ Commande d'affichage du schéma d'une table de données
+ [in] t, Table à afficher
+*/
+void afficher_schema(const Table* t);
 
-void afficher_schema(const Table* t);// Fonction afficher_schema
-void create_table(Table* t);// Fonction create_table
-void insert_enregistrement(Table* t);// Fonction insert_enregistrement
-void afficher_enregistrements(const Table* t);// Fonction afficher_enregistrements
-void delete_enregistrement(Table* t);// Fonction delete_enregistrement
-void afficher_enregistrement(const Table* t);// Fonction afficher_enregistrement
-void delete_table(Table* t);// Fonction delete_table
+/*
+ Commande de création d'une table de données
+ [in] t, Table avant la création d'une table de données
+ [out] t, Table après la création d'une table de données
+*/
+void create_table(Table* t);
+
+/*
+ Commande d'insertion d'une ligne de données
+ [in] t, Table avant enregistrement
+ [out] t, Table après enregistrement
+*/
+void insert_enregistrement(Table* t);
+
+/*
+ Commande d'affichage de toutes les lignes de données
+ [in] t, Table à afficher
+*/
+void afficher_enregistrements(const Table* t);
+
+/*
+ Commande de destruction d'une ligne de données
+ [in] t, Table avant destruction d'une ligne de données
+ [out] t, Table après destruction d'une ligne de données
+*/
+void delete_enregistrement(Table* t);
+
+/*
+ Commande d'affichage d'une ligne de données
+ [in] t, Table contenant la ligne de données à afficher
+*/
+void afficher_enregistrement(const Table* t);
+
+/*
+ Commande de destruction d'une table de données
+ [in] t, Table avant destruction d'une table de données
+ [out] t, Table après destruction d'une table de données
+*/
+void delete_table(Table* t);
+
+
 int main() {
 	char mot[lgMot + 1];// +1 pour stocker le caractère '\0'
 	Table t;
@@ -74,6 +117,7 @@ int main() {
 		}
 	}
 }
+
 void create_table(Table* t) {
 	char temp[lgMot + 1];
 	scanf("%s", temp);// Récupération nom de la table
@@ -88,6 +132,7 @@ void create_table(Table* t) {
 		printf("table existante\n");
 	}
 }
+
 void afficher_schema(const Table* t) {
 	char mot[lgMot + 1];
 	scanf("%s", mot);// Récupération nom de la table
@@ -100,6 +145,7 @@ void afficher_schema(const Table* t) {
 	else
 		printf("table inconnue\n");
 }
+
 void insert_enregistrement(Table* t) {
 	char mot[lgMot + 1];
 	scanf("%s", mot);// Récupération nom de la table
@@ -130,6 +176,7 @@ void afficher_enregistrements(const Table* t) {
 		printf("table inconnue\n");
 	}
 }
+
 void delete_enregistrement(Table* t) {
 	unsigned int i, r;
 	char mot[lgMot + 1];
@@ -146,6 +193,7 @@ void delete_enregistrement(Table* t) {
 		t->nbEnregistrement--;//permet d'éliminer le numéros du dernier enregistrement
 	}
 }
+
 void afficher_enregistrement(const Table* t) {
 	char mot[lgMot + 1];
 	scanf("%s", mot);// Récupération nom de la table
@@ -175,14 +223,14 @@ void delete_table(Table* t) {
 		printf("table inconnue\n");
 		return;
 	}
-	for (unsigned int i = 0; i < t->nbChamps; ++i) {
+	for (unsigned int i = 0; i < t->nbChamps; ++i) {// permet d'initialiser les champs à chaine vide
 		strcpy(t->schema[i].nom, "");
 		strcpy(t->schema[i].type, "");
-		for (unsigned int r = 0; r < t->nbEnregistrement; ++r)
+		for (unsigned int r = 0; r < t->nbEnregistrement; ++r)// pour initialiser les enregistrements à chaine vide
 			strcpy(t->enregistre[r].data[i].motdat, "");
 	}
-	strcpy(t->nom, "");
-	t->nbChamps = 0;
-	t->nbEnregistrement = 0;
+	strcpy(t->nom, "");// initialise le nom de la table à chaine vide
+	t->nbChamps = 0;// initialise le nombre de champ à 0
+	t->nbEnregistrement = 0;// initialise le nombre d'enregistrement à 0
 }
 
